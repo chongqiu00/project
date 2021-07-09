@@ -1,0 +1,129 @@
+2021-03-31 13:32:02 ftp.login ok.
+2021-03-31 14:23:36 ftp.login ok.
+2021-03-31 14:31:02 ftp.login ok.
+2021-03-31 15:13:16 ftp.login ok.
+2021-03-31 15:41:44 ftp.login ok.
+2021-03-31 15:41:44 chdir ok.
+2021-03-31 15:41:44 nlist ok.
+2021-03-31 15:43:05 ftp.login ok.
+2021-03-31 15:43:05 chdir ok.
+2021-03-31 15:43:05 nlist ok.
+2021-03-31 15:55:45 ftp.login ok.
+2021-03-31 15:55:45 chdir ok.
+2021-03-31 15:55:46 nlist ok.
+2021-03-31 16:04:21 ftp.login ok.
+2021-03-31 16:04:21 chdir ok.
+2021-03-31 16:04:21 nlist ok.
+2021-03-31 16:04:21 get SURF_ZH_20210331142438_12689.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142439_12690.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142439_12691.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142440_12692.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142441_12693.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142441_12694.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142442_12695.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142442_12696.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142443_12697.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142443_12698.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142444_12699.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142444_12700.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142445_12701.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142446_12702.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142447_12703.txt ...ok.
+2021-03-31 16:04:22 get SURF_ZH_20210331142447_12704.txt ...ok.
+2021-03-31 16:25:21 ftp.login ok.
+2021-03-31 16:25:21 chdir ok.
+2021-03-31 16:25:21 nlist ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142438_12689.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142439_12690.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142439_12691.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142440_12692.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142441_12693.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142441_12694.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142442_12695.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142442_12696.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142443_12697.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142443_12698.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142444_12699.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142444_12700.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142445_12701.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142446_12702.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142447_12703.txt ...ok.
+2021-03-31 16:25:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142447_12704.txt ...ok.
+2021-03-31 16:29:06 ftp.login ok.
+2021-03-31 16:29:06 chdir ok.
+2021-03-31 16:29:06 nlist ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142438_12689.txt ...ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142439_12690.txt ...ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142439_12691.txt ...ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142440_12692.txt ...ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142441_12693.txt ...ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142441_12694.txt ...ok.
+2021-03-31 16:29:06 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142442_12695.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142442_12696.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142443_12697.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142443_12698.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142444_12699.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142444_12700.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142445_12701.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142446_12702.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142447_12703.txt ...ok.
+2021-03-31 16:29:07 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210331142447_12704.txt ...ok.
+2021-04-01 09:49:52 ftp.login ok.
+2021-04-01 09:49:52 ftp.chdir(/home/zww/qxidc/data/ftp/surfdatabak) failed.
+2021-04-01 09:51:43 ftp.login ok.
+2021-04-01 09:51:43 chdir ok.
+2021-04-01 09:51:43 nlist ok.
+2021-04-01 09:54:31 ftp.login ok.
+2021-04-01 09:54:31 chdir ok.
+2021-04-01 09:54:31 nlist ok.
+2021-04-01 09:57:36 ftp.login ok.
+2021-04-01 09:57:36 chdir ok.
+2021-04-01 09:57:36 nlist ok.
+2021-04-01 10:01:15 ftp.login ok.
+2021-04-01 10:01:15 chdir ok.
+2021-04-01 10:01:15 nlist ok.
+2021-04-01 10:06:41 ftp.login ok.
+2021-04-01 10:06:41 chdir ok.
+2021-04-01 10:06:41 nlist ok.
+2021-04-01 10:09:56 ftp.login ok.
+2021-04-01 10:09:56 chdir ok.
+2021-04-01 10:09:56 nlist ok.
+2021-04-01 10:12:41 ftp.login ok.
+2021-04-01 10:12:41 chdir ok.
+2021-04-01 10:12:41 pwd=/home/zww/qxidc/data/ftp/surfdatabak
+2021-04-01 10:12:41 nlist ok.
+2021-04-01 10:15:21 ftp.login ok.
+2021-04-01 10:15:21 chdir ok.
+2021-04-01 10:15:21 pwd=/home/zww/qxidc/data/ftp/surfdata
+2021-04-01 10:15:21 nlist ok.
+2021-04-01 10:15:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401095335_13128.txt ...ok.
+2021-04-01 10:15:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401095338_13129.txt ...ok.
+2021-04-01 10:15:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401095339_13130.txt ...ok.
+2021-04-01 10:15:21 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401095339_13131.txt ...ok.
+2021-04-01 10:15:22 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401095340_13132.txt ...ok.
+2021-04-01 10:18:03 ftp.login ok.
+2021-04-01 10:18:03 chdir ok.
+2021-04-01 10:18:03 pwd=/home/zww/qxidc/data/ftp/surfdata
+2021-04-01 10:18:03 nlist ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101624_13224.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101624_13225.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101625_13226.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101625_13227.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101626_13228.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101626_13229.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101627_13230.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101627_13231.txt ...ok.
+2021-04-01 10:18:03 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101629_13232.txt ...ok.
+2021-04-01 10:23:30 ftp.login ok.
+2021-04-01 10:23:30 chdir ok.
+2021-04-01 10:23:30 pwd=/home/zww/qxidc/data/ftp/surfdata
+2021-04-01 10:23:30 nlist ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101624_13224.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101624_13225.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101625_13226.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101625_13227.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101626_13228.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101626_13229.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101627_13230.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101627_13231.txt ...ok.
+2021-04-01 10:23:30 get /home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20210401101629_13232.txt ...ok.
