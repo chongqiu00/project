@@ -162,7 +162,7 @@ CSIGNALLOG::~CSIGNALLOG()
 {
 }
 
-// 把用逗号分隔的记录拆分到m_stsignallog结构中。
+// 把记录拆分到vsignallog容器中。
 bool CSIGNALLOG::SplitBuffer(const char *strBuffer)
 {
   vsignallog.clear();
@@ -173,7 +173,9 @@ bool CSIGNALLOG::SplitBuffer(const char *strBuffer)
   CmdStr.SplitToCmd(strBuffer," ",true);
   if (CmdStr.CmdCount()<3) { invalidcount++; return false; }
 
-  CmdStr.GetValue(0,m_stsignallog.ddatetime,12); // 数据时间：格式yyyy-mm-dd hh:mi:ss。
+  CmdStr.GetValue(0,m_stsignallog.ddatetime,12); // 数据时间：格式yyyymmddhh24mi
+  strcat(m_stsignallog.ddatetime,"00");
+  AddTime(m_stsignallog.ddatetime,m_stsignallog.ddatetime,8*60*60,"yyyy-mm-dd hh24:mi:ss");
   CmdStr.GetValue(1,m_stsignallog.obtid,4);      // 站点代码
   char strtemp[11];
   for (int ii=3;ii<=CmdStr.CmdCount();ii++)
@@ -189,7 +191,7 @@ bool CSIGNALLOG::SplitBuffer(const char *strBuffer)
   return true;
 }
 
-// 把m_stsignallog结构中的值更新到T_SIGNALLOG表中。
+// 把vsignallog容器中的值更新到T_SIGNALDATA表中。
 long CSIGNALLOG::InsertTable()
 {
   if (stmtsel.m_state==0)
@@ -225,6 +227,7 @@ long CSIGNALLOG::InsertTable()
   for (int ii=0;ii<vsignallog.size();ii++)
   {
     memcpy(&m_stsignallog,&vsignallog[ii],sizeof(struct st_signallog));
+    m_logfile->Write("%s,%s,%s,%s\n",m_stsignallog.obtid,m_stsignallog.ddatetime,m_stsignallog.signalname,m_stsignallog.signalcolor);
 
     if (stmtsel.execute() != 0)
     {
@@ -262,4 +265,66 @@ long CSIGNALLOG::InsertTable()
 
   return 0;
 }
+
+
+
+// 把非结构化数据文件写入oracle数据库的表中
+int FileToTable(connection *in_conn,CLogFile *in_logfile,char *in_tname,char *in_filename,char *in_ddatetime)
+{
+  sqlstatement stmt(in_conn);
+
+  // 判断文件记录在表中是否已存在
+  int icount=0;
+  stmt.prepare("select count(*) from %s where filename=:1",in_tname);
+  stmt.bindin(1,in_filename,300);
+  stmt.bindout(1,&icount);
+  if (stmt.execute() != 0)
+  {
+    in_logfile->Write("FileToTable() failed.%s\n%s\n",stmt.m_sql,stmt.m_cda.message); return stmt.m_cda.rc;
+  }
+  stmt.next();
+  // 如果记录已存在，直接返回0-成功。
+  if (icount>0) return 0;
+
+  // 把文件信息插入表中。
+  int ifilesize=FileSize(in_filename);
+  stmt.prepare("\
+       insert into %s(filename,ddatetime,filesize,filecontent,crttime,keyid)\
+               values(:1,to_date(:2,'yyyymmddhh24miss'),:3,empty_blob(),sysdate,SEQ_%s.nextval)",\
+       in_tname,in_tname+2);
+  stmt.bindin(1,in_filename,300);
+  stmt.bindin(2,in_ddatetime,14);
+  stmt.bindin(3,&ifilesize);
+  
+  if (stmt.execute() != 0)
+  {
+    in_logfile->Write("FileToTable() failed.%s\n%s\n",stmt.m_sql,stmt.m_cda.message); return stmt.m_cda.rc;
+  }
+    
+  // 把文件内容更新到BLOB字段中。
+  stmt.prepare("select filecontent from %s where filename=:1 for update",in_tname);
+  stmt.bindin(1,in_filename,300);
+  stmt.bindblob();
+
+  // 执行SQL语句，一定要判断返回值，0-成功，其它-失败。
+  if (stmt.execute() != 0)
+  {
+    in_logfile->Write("FileToTable() failed.%s\n%s\n",stmt.m_sql,stmt.m_cda.message); return stmt.m_cda.rc;
+  }
+
+  // 获取一条记录，一定要判断返回值，0-成功，1403-无记录，其它-失败。
+  if (stmt.next() != 0) return -1;
+
+  // 把磁盘文件pic_in.jpg的内容写入BLOB字段，一定要判断返回值，0-成功，其它-失败。
+  if (stmt.filetolob((char *)in_filename) != 0)
+  {
+    in_logfile->Write("FileToTable() stmt.filetolob() failed.\n%s\n",stmt.m_cda.message); return -1;
+  }
+
+  // 提交事务
+  in_conn->commit();
+
+  return 0;
+}
+
 

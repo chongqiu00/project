@@ -36,7 +36,7 @@ void SplitFields();        // 拆分fieldname和fieldlen
 // 显示程序的帮助
 void _help(char *argv[]);
 
-int maxkeyid;   // 已导出数据的最大的keyid
+long maxkeyid;   // 已导出数据的最大的keyid
 bool LoadMaxKeyid(); // 从系统参数T_SYSARG表中加载已导出数据的最大的keyid
 bool UptMaxKeyid();  // 更新系统参数T_SYSARG表中已导出数据的最大的keyid
   
@@ -64,7 +64,7 @@ int main(int argc,char *argv[])
   while (true)
   {
     // 连接数据库
-    if (conn.connecttodb(starg.connstr,"Simplified Chinese_China.ZHS16GBK") != 0)
+    if (conn.connecttodb(starg.connstr,starg.charset) != 0)
     {
       logfile.Write("connect database %s failed.\n",starg.connstr); sleep(starg.timetvl); continue;
     }
@@ -95,8 +95,10 @@ void _help(char *argv[])
   printf("\n");
   printf("Using:/htidc/public/bin/exptables logfilename xmlbuffer\n\n");
 
-  printf("Sample:/htidc/public/bin/exptables /log/shqx/exptables_surfdata_for_hb.log \"<connstr>shqx/pwdidc@snorcl11g_198</connstr><charset>Simplified Chinese_China.ZHS16GBK</charset><tname>T_SURFDATA</tname><cols>obtid,to_char(ddatetime,'yyyymmddhh24miss'),t,p,u,wd,wf,r,vis</cols><fieldname>obtid,ddatetime,t,p,u,wd,wf,r,vis</fieldname><fieldlen>5,14,8,8,8,8,8,8,8</fieldlen><exptype>1</exptype><andstr> and obtid in ('59293','50745')</andstr><bname>SURFDATA_</bname><ename>_for_hb</ename><taskname>SURFDATA_FOR_HB</taskname><exppath>/data/shqx/exp/tohb</exppath><timetvl>30</timetvl>\"\n\n");
-  printf("Sample:/htidc/public/bin/exptables /log/shqx/exptables_obtcode_for_hb.log \"<connstr>shqx/pwdidc@snorcl11g_198</connstr><charset>Simplified Chinese_China.ZHS16GBK</charset><tname>T_OBTCODE</tname><cols>obtid,obtname,provname,lat,lon,height</cols><fieldname>obtid,obtname,provname,lat,lon,height</fieldname><fieldlen>5,30,30,8,8,8</fieldlen><exptype>2</exptype><andstr> and rsts=1 and obtid in ('59293','50745')</andstr><bname>OBTCODE_</bname><ename>_for_hb</ename><exppath>/data/shqx/exp/tohb</exppath><timetvl>300</timetvl>\"\n\n");
+  printf("增量导出示例：\n");
+  printf("/htidc/public/bin/exptables /log/shqx/exptables_surfdata_for_hb.log \"<connstr>shqx/pwdidc@snorcl11g_198</connstr><charset>Simplified Chinese_China.ZHS16GBK</charset><tname>T_SURFDATA</tname><cols>obtid,to_char(ddatetime,'yyyymmddhh24miss'),t,p,u,wd,wf,r,vis</cols><fieldname>obtid,ddatetime,t,p,u,wd,wf,r,vis</fieldname><fieldlen>5,14,8,8,8,8,8,8,8</fieldlen><exptype>1</exptype><andstr> and obtid in ('59293','50745')</andstr><bname>SURFDATA_</bname><ename>_for_hb</ename><taskname>SURFDATA_FOR_HB</taskname><exppath>/data/shqx/exp/tohb</exppath><timetvl>30</timetvl>\"\n\n");
+  printf("全量导出示例：\n");
+  printf("/htidc/public/bin/exptables /log/shqx/exptables_obtcode_for_hb.log \"<connstr>shqx/pwdidc@snorcl11g_198</connstr><charset>Simplified Chinese_China.ZHS16GBK</charset><tname>T_OBTCODE</tname><cols>obtid,obtname,provname,lat,lon,height</cols><fieldname>obtid,obtname,provname,lat,lon,height</fieldname><fieldlen>5,30,30,8,8,8</fieldlen><exptype>2</exptype><andstr> and rsts=1 and obtid in ('59293','50745')</andstr><bname>OBTCODE_</bname><ename>_for_hb</ename><exppath>/data/shqx/exp/tohb</exppath><timetvl>300</timetvl>\"\n\n");
 
   printf("本程序是数据中心的公共功能模块，从数据库的表中导出数据生成xml文件，用于数据交换。\n");
   printf("logfilename是本程序运行的日志文件。\n");
@@ -107,7 +109,7 @@ void _help(char *argv[])
   printf("需要导出字段的列表 <cols>obtid,to_char(ddatetime,'yyyymmddhh24miss'),t,p,u,wd,wf,r,vis</cols> 可以采用函数。\n");
   printf("导出字段的别名列表 <fieldname>obtid,ddatetime,t,p,u,wd,wf,r,vis</fieldname> 必须与cols一一对应。\n");
   printf("导出字段的长度列表 <fieldlen>5,14,8,8,8,8,8,8,8</fieldlen> 必须与cols一一对应。\n");
-  printf("导出数据的方式 <exptype>1</exptype> 1-增量导出；2-全量导出。\n");
+  printf("导出数据的方式 <exptype>1</exptype> 1-增量导出；2-全量导出，如果是增量导出，要求表一定要有keyid字段。\n");
   printf("导出数据的附加条件 <andstr> and obtid in ('59293','50745')</andstr> 注意，关键字and不能少。\n");
   printf("导出文件的命名的前部分 <bname>SURFDATA_</bname>\n");
   printf("导出文件的命名的后部分 <ename>_for_hb</ename>\n");
@@ -181,7 +183,7 @@ bool _exptables()
   char fieldvalue[vfieldname.size()][maxfieldlen+1]; // 输出变量定义为一个二维数组
   memset(strsql,0,sizeof(strsql));
   if (starg.exptype==1)
-    sprintf(strsql,"select %s,keyid from %s where 1=1 and keyid>%d %s order by keyid",starg.cols,starg.tname,maxkeyid,starg.andstr);
+    sprintf(strsql,"select %s,keyid from %s where 1=1 and keyid>%ld %s order by keyid",starg.cols,starg.tname,maxkeyid,starg.andstr);
   else
     sprintf(strsql,"select %s from %s where 1=1 %s",starg.cols,starg.tname,starg.andstr);
   sqlstatement stmt(&conn);

@@ -1,7 +1,6 @@
 /*
  *  本程序用于处理全国气象站点观测的分钟数据，并保存到数据库的T_SURFDATA表中。
  *  这个是没有优化前的程序
- *  作者：码农有道 日期：20190905
 */
 #include "_public.h"
 #include "_ooci.h"
@@ -36,8 +35,8 @@ int main(int argc,char *argv[])
   if (argc!=5)
   {
     printf("\n本程序用于处理全国气象站点观测的分钟数据，并保存到数据库的T_SURFDATA表中。\n");
-    printf("/htidc/shqx/bin/psurfdata 数据文件存放的目录 日志文件名 数据库连接参数 程序运行时间间隔\n");
-    printf("例如：/htidc/shqx/bin/psurfdata /data/shqx/sdata/surfdata /log/shqx/psurfdata.log shqx/pwdidc@snorcl11g_198 10\n");
+    printf("/htidc/shqx/bin/psurfdata_old 数据文件存放的目录 日志文件名 数据库连接参数 程序运行时间间隔\n");
+    printf("例如：/htidc/shqx/bin/psurfdata_old /data/shqx/sdata/surfdata /log/shqx/psurfdata_old.log shqx/pwdidc@snorcl11g_198 10\n");
     return -1;
   }
 
@@ -186,7 +185,7 @@ bool _psurfdata()
       {
         logfile.Write("%s\n",strBuffer);
         logfile.Write("stmtins.execute() failed.\n%s\n%s\n",stmtins.m_sql,stmtins.m_cda.message); 
-        if ( (stmtsel.m_cda.rc>=3113) && (stmtsel.m_cda.rc<=3115) ) return false;
+        if ( (stmtins.m_cda.rc>=3113) && (stmtins.m_cda.rc<=3115) ) return false;
       }
     }
   }

@@ -6,6 +6,29 @@
 
 int main(int argc,char *argv[])
 {
+  CFile File;
+
+  File.Open("/tmp/aaa.dat","r");  //  /tmp/aaa.dat.tmp
+
+  char strbuf[301];
+
+  // while 需要10秒的时间
+  while(true)
+  {
+    memset(strbuf,0,sizeof(strbuf));
+
+    //if (File.FFGETS(strbuf,300,"<endl/>")==false) break;
+    if (File.Fgets(strbuf,300)==false) break;
+
+    // 向文件中写入数据
+    printf("=%s=\n",strbuf);
+
+  }
+
+  // File.CloseAndRename();    // rename /tmp/aaa.dat.tmp /tmp/aaa.dat
+  
+  return 0;
+
   if (argc != 3)
   {
     printf("\n");

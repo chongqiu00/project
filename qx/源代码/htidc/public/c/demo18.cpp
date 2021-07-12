@@ -9,25 +9,25 @@ int main(int argc,char *argv[])
   Cftp ftp;
 
   // 登录远程FTP服务器
-  if (ftp.login("192.168.43.168","zww","zww1224",FTPLIB_PASSIVE) == false)
+  if (ftp.login("118.89.50.198:21","wucz","test1234TEST",FTPLIB_PASSIVE) == false)
   {
     printf("ftp.login() failed.\n"); return -1;
   }
 
-  ftp.chdir("/home/zww/qxidc/data/ftp/surfdata");
-  ftp.nlist("/home/zww/qxidc/data/ftp/surfdata","/tmp/tmp.list");
+  ftp.chdir("/home/wucz/qxidc/data/ftp/surfdata");
+  ftp.nlist("/home/wucz/qxidc/data/ftp/surfdata","/tmp/tmp.list");
   ftp.nlist("","/tmp/tmp.list1");
   ftp.nlist(".","/tmp/tmp.list2");
   ftp.nlist("*","/tmp/tmp.list3");
 
   return 0;
-  ftp.put("/home/zww/qxidc/data/ftp/surfdata/SURF_ZH_20190808043801_11644.txt","/tmp/SURF_ZH_20190808043801_11644.txt",true);
+  ftp.put("/home/wucz/qxidc/data/ftp/surfdata/SURF_ZH_20190808043801_11644.txt","/tmp/SURF_ZH_20190808043801_11644.txt",true);
 
   // 改变本地目录
   chdir("/tmp");
 
   // 进入ftp服务器上文件存放的目录
-  if (ftp.chdir("/home/zww/qxidc/data/ftp/surfdata") == false)
+  if (ftp.chdir("/home/wucz/qxidc/data/ftp/surfdata") == false)
   {
     printf("ftp.chdir() failed.\n"); return -1;
   }

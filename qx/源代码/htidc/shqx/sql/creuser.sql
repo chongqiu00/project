@@ -2,7 +2,7 @@
 alter profile DEFAULT limit FAILED_LOGIN_ATTEMPTS UNLIMITED;
 alter profile DEFAULT limit PASSWORD_LIFE_TIME  UNLIMITED;
 
--- 数据中心用户的主用户
+-- 上海气象数据中心的主用户
 -- drop user shqx cascade;
 create user shqx profile default identified by pwdidc default tablespace users account unlock;
 grant connect to shqx;

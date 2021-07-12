@@ -1,18 +1,20 @@
 /*
-   此程序用于演示把自定义函数定义在程序外部的程序文件中
+   freec++框架程序文件，包括了公共的数据结构、函数和类。
+   这是一个完全开源的框架，对使用者没有任何限制，可用于商业用途，但是，在使用者的项目中，必须标明源作者
    作者：码农有道   日期：20190601
 */
 
 #include "_public.h"  // 包含自定义函数声明的头文件
 
-int SNPRINTF(char *str, size_t size, const char *fmt, ...)
+
+int SNPRINTF(char *str,const size_t destlen, const char *fmt, ...)
 {
-  memset(str,0,size+1);
+  memset(str,0,destlen+1);
 
   va_list arg;
 
   va_start( arg, fmt );
-  vsnprintf( str,size, fmt, arg );
+  vsnprintf( str,destlen, fmt, arg );
   va_end( arg );
 }
 
@@ -70,6 +72,7 @@ char *STRNCAT(char* dest,const size_t destlen,const char* src,size_t n)
 
 
 // 把整数的时间转换为字符串格式的时间，格式如："2019-02-08 12:05:08"，如果转换成功函数返回0，失败返回-1，函数的声明如下：
+/*
 int timetostr(const time_t ti,char *strtime)
 {
   struct tm *sttm; 
@@ -81,8 +84,10 @@ int timetostr(const time_t ti,char *strtime)
   
   return 0;
 }
+*/
 
 // 把字符串格式的时间转换为整数的时间，函数的声明如下：
+/*
 int strtotime(const char *strtime,time_t *ti)
 {
   char strtmp[11];
@@ -118,7 +123,7 @@ int strtotime(const char *strtime,time_t *ti)
 
   return *ti;
 }
-
+*/
 
 CFile::CFile()   // 类的构造函数
 {
@@ -244,7 +249,7 @@ void CFile::Fprintf(const char *fmt, ... )
   if ( m_bEnBuffer == false ) fflush(m_fp);
 }
 
-// 调用fgets从文件中读取一行
+// 调用fgets从文件中读取一行，bDelCRT=true删除换行符，false不删除，缺省为false
 bool CFile::Fgets(char *strBuffer,const int ReadSize,bool bDelCRT)
 {
   if ( m_fp == 0 ) return false;
@@ -269,9 +274,30 @@ bool CFile::FFGETS(char *strBuffer,const int ReadSize,const char *strEndStr)
   return FGETS(m_fp,strBuffer,ReadSize,strEndStr);
 }
 
+// 调用fread从文件中读取数据。
+size_t CFile::Fread(void *ptr, size_t size)
+{
+  if ( m_fp == 0 ) return -1;
+
+  return fread(ptr,1,size,m_fp);
+}
+
+// 调用fwrite向文件中写数据
+size_t CFile::Fwrite(const void *ptr, size_t size )
+{
+  if ( m_fp == 0 ) return -1;
+
+  size_t tt=fwrite(ptr,1,size,m_fp);
+
+  if ( m_bEnBuffer == false ) fflush(m_fp);
+
+  return tt;
+}
+
 
 // 从文件文件中读取一行
 // strEndStr是一行数据的结束标志，如果为空，则以换行符"\n"为结束标志。
+// 本函数不会删除行的结束标志
 bool FGETS(const FILE *fp,char *strBuffer,const int ReadSize,const char *strEndStr)
 {
   char strLine[ReadSize+1];
@@ -634,7 +660,7 @@ bool CLogFile::Open(const char *in_filename,const char *in_openmode,bool bBackup
   return true;
 }
 
-// 如果日志文件大于100M，就备份它
+// 如果日志文件大于MAXLOGFSIZE，就备份它
 bool CLogFile::BackupLogFile()
 {
   // 不备份
@@ -644,19 +670,19 @@ bool CLogFile::BackupLogFile()
 
   fseek(m_tracefp,0L,2);
 
-  if (ftell(m_tracefp) > 100*1024*1024)
+  if (ftell(m_tracefp) > MAXLOGFSIZE*1024*1024)
   {
     fclose(m_tracefp); m_tracefp=0;
 
     char strLocalTime[21];
     memset(strLocalTime,0,sizeof(strLocalTime));
-    LocalTime(strLocalTime,"yyyymmddhhmiss");
+    LocalTime(strLocalTime,"yyyymmddhh24miss");
 
     char bak_filename[301];
     memset(bak_filename,0,sizeof(bak_filename));
     snprintf(bak_filename,300,"%s.%s",m_filename,strLocalTime);
     rename(m_filename,bak_filename);
-
+printf("rename %s m_filename ok\n",bak_filename);
     if ((m_tracefp=FOPEN(m_filename,m_openmode)) == NULL) return false;
   }
 
@@ -717,7 +743,7 @@ void CloseIOAndSignal()
 {
   int ii=0;
 
-  for (ii=0;ii<50;ii++)
+  for (ii=0;ii<100;ii++)
   {
     signal(ii,SIG_IGN); close(ii);
   }
@@ -775,14 +801,14 @@ int UTime(const char *filename,const char *mtime)
 {
   struct utimbuf stutimbuf;
 
-  stutimbuf.actime=stutimbuf.modtime=UTCTime(mtime);
+  stutimbuf.actime=stutimbuf.modtime=strtotime(mtime);
 
   return utime(filename,&stutimbuf);
 }
 
 // 把字符串格式的时间转换为time_t
 // stime为输入的时间，格式不限，但一定要包括yyyymmddhh24miss
-time_t UTCTime(const char *stime)
+time_t strtotime(const char *stime)
 {
   char strtime[21],yyyy[5],mm[3],dd[3],hh[3],mi[3],ss[3];
   memset(strtime,0,sizeof(strtime));
@@ -920,7 +946,7 @@ int AddTime(const char *in_stime,char *out_stime,const int in_interval,const cha
   time_t  timer;
   struct tm nowtimer;
 
-  timer=UTCTime(in_stime)+in_interval;
+  timer=strtotime(in_stime)+in_interval;
 
   nowtimer = *localtime ( &timer ); nowtimer.tm_mon++;
 
@@ -1050,7 +1076,7 @@ bool GetXMLBuffer(const char *in_XMLBuffer,const char *in_FieldName,bool *out_Va
 
   if (GetXMLBuffer(in_XMLBuffer,in_FieldName,strTemp,10) == true)
   {
-    if ( (strcmp(strTemp,"TRUE")==0) || (strcmp(strTemp,"true")==0) ) (*out_Value)=true; return true;
+    if ( (strcmp(strTemp,"true")==0) || (strcmp(strTemp,"true")==0) ) (*out_Value)=true; return true;
   }
 
   return false;
@@ -1693,6 +1719,8 @@ CTcpServer::CTcpServer()
 
 bool CTcpServer::InitServer(const unsigned int port)
 {
+  if (m_listenfd > 0) { close(m_listenfd); m_listenfd=-1; }
+
   m_listenfd = socket(AF_INET,SOCK_STREAM,0);
 
   // WINDOWS平台如下
@@ -2058,6 +2086,99 @@ bool RecvFile(CLogFile *logfile,int sockfd,struct st_fileinfo *stfileinfo)
   return true;
 }
 
+// 把某一个文件复制到另一个文件
+bool COPY(const char *srcfilename,const char *dstfilename)
+{
+  if (MKDIR(dstfilename) == false) return false;
+
+  char strdstfilenametmp[301];
+  memset(strdstfilenametmp,0,sizeof(strdstfilenametmp));
+  snprintf(strdstfilenametmp,300,"%s.tmp",dstfilename);
+
+  int  srcfd,dstfd;
+
+  srcfd=dstfd=-1;
+
+  int iFileSize=FileSize(srcfilename);
+
+  int  bytes=0;
+  int  total_bytes=0;
+  int  onread=0;
+  char buffer[5000];
+
+  if ( (srcfd=open(srcfilename,O_RDONLY)) < 0 ) return false;
+
+  if ( (dstfd=open(strdstfilenametmp,O_WRONLY|O_CREAT|O_TRUNC,S_IWUSR|S_IRUSR|S_IXUSR)) < 0) { close(srcfd); return false; }
+
+  while (true)
+  {
+    memset(buffer,0,sizeof(buffer));
+
+    if ((iFileSize-total_bytes) > 5000) onread=5000;
+    else onread=iFileSize-total_bytes;
+
+    bytes=read(srcfd,buffer,onread);
+
+    if (bytes > 0) write(dstfd,buffer,bytes);
+
+    total_bytes = total_bytes + bytes;
+
+    if (total_bytes == iFileSize) break;
+  }
+
+  close(srcfd);
+
+  close(dstfd);
+
+  // 更改文件的修改时间属性
+  char strmtime[21];
+  memset(strmtime,0,sizeof(strmtime));
+  FileMTime(srcfilename,strmtime);
+  UTime(strdstfilenametmp,strmtime);
+
+  if (RENAME(strdstfilenametmp,dstfilename) == false) { REMOVE(strdstfilenametmp); return false; }
+
+  return true;
+}
 
 
+CTimer::CTimer()
+{
+  memset(&m_start,0,sizeof(struct timeval));
+  memset(&m_end,0,sizeof(struct timeval));
+
+  // 开始计时
+  Start();
+}
+
+// 开始计时
+void CTimer::Start()
+{
+  gettimeofday( &m_start, NULL );
+}
+
+// 计算已逝去的时间，单位：秒，小数点后面是微秒
+double CTimer::Elapsed()
+{
+
+  gettimeofday( &m_end, NULL );
+
+  double dstart,dend;
+
+  dstart=dend=0;
+
+  char strtemp[51];
+  memset(strtemp,0,sizeof(strtemp));
+  snprintf(strtemp,30,"%ld.%ld",m_start.tv_sec,m_start.tv_usec);
+  dstart=atof(strtemp);
+
+  memset(strtemp,0,sizeof(strtemp));
+  snprintf(strtemp,30,"%ld.%ld",m_end.tv_sec,m_end.tv_usec);
+  dend=atof(strtemp);
+
+  // 重新开始计时
+  Start();
+
+  return dend-dstart;
+}
 

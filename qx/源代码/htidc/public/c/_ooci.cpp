@@ -447,6 +447,7 @@ int sqlstatement::prepare(const char *fmt,...)
   va_list ap;
   va_start(ap,fmt);
   vsnprintf(m_sql,10000,fmt,ap);
+  va_end(ap);
 
   int oci_ret = OCIStmtPrepare(m_handle.smthp,m_handle.errhp,(OraText*)m_sql,strlen(m_sql),OCI_NTV_SYNTAX,OCI_DEFAULT);
 

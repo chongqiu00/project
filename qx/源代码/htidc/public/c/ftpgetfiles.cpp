@@ -154,9 +154,6 @@ bool _ftpgetfiles()
 
     logfile.WriteEx("ok.\n");
     
-    // 如果ptype==1，把采集成功的文件记录追加到okfilename文件中
-    if (starg.ptype==1) AppendToOKFileName(&vlistfile[ii]);
-
     // 删除文件
     if (starg.ptype==2) ftp.ftpdelete(strremotefilename);
 
@@ -167,7 +164,11 @@ bool _ftpgetfiles()
       SNPRINTF(strremotefilenamebak,300,"%s/%s",starg.remotepathbak,vlistfile[ii].filename);
       ftp.ftprename(strremotefilename,strremotefilenamebak);
     }
+  
+    // 如果ptype==1，把采集成功的文件记录追加到okfilename文件中
+    if (starg.ptype==1) AppendToOKFileName(&vlistfile[ii]);
   }
+ 
   return true;
 }
 

@@ -118,7 +118,8 @@ int main(int argc, char *argv[])
     printf("outputfilename 最终的输出文件，该文件是gb18030编码，注意tmpfilename被转换为outputfilename后，tmpfilename文件被自动删除。\n");
     printf("logfilename 本程序的运行产生的日志文件名。\n");
     printf("charset 网页的字符集，如utf-8\n\n");
-    exit(1);
+    printf("建议弃用本程序，采用wgetclient程序更合适。\n");
+    return -1;
   }
 
   // 关闭全部的信号和输入输出
@@ -131,6 +132,8 @@ int main(int argc, char *argv[])
   {
     printf("logfile.Open(%s) failed.\n",argv[4]); return -1;
   }
+
+  MKDIR(argv[2],true); MKDIR(argv[3],true);
 
   logfile.Write("parameter.1 is: %s\n", argv[1]);
 
@@ -146,13 +149,13 @@ int main(int argc, char *argv[])
   /*取得主机IP地址*/
   if((host=gethostbyname(host_addr))==NULL)
   {
-    fprintf(stderr,"Gethostname error, %s\n", strerror(errno)); exit(1);
+    fprintf(stderr,"Gethostname error, %s\n", strerror(errno)); return -1;
   }
 
   /* 客户程序开始建立 sockfd描述符 */
   if((sockfd=socket(AF_INET,SOCK_STREAM,0))==-1)/*建立SOCKET连接*/
   {
-    fprintf(stderr,"Socket Error:%s\a\n",strerror(errno)); exit(1);
+    fprintf(stderr,"Socket Error:%s\a\n",strerror(errno)); return -1;
   }
 
   /* 客户程序填充服务端的资料 */
@@ -164,8 +167,7 @@ int main(int argc, char *argv[])
   /* 客户程序发起连接请求 */
   if(connect(sockfd,(struct sockaddr *)(&server_addr),sizeof(struct sockaddr))==-1)/*连接网站*/
   {
-    fprintf(stderr,"Connect Error:%s\a\n",strerror(errno));
-    exit(1);
+    fprintf(stderr,"Connect Error:%s\a\n",strerror(errno)); close(sockfd); return -1;
   }
 
   sprintf(request, "GET /%s HTTP/1.1\r\nAccept: */*\r\nAccept-Language: zh-cn\r\n\
@@ -196,7 +198,7 @@ Host: %s:%d\r\nConnection: Close\r\n\r\n", host_file, host_addr, portnumber);
   nbytes=strlen(request);
   while(totalsend < nbytes) {
     send = write(sockfd, request + totalsend, nbytes - totalsend);
-    if(send==-1)  {printf("send error!%s\n", strerror(errno));exit(0);}
+    if(send==-1)  {printf("send error!%s\n", strerror(errno)); close(sockfd); return -1;}
     totalsend+=send;
     logfile.Write("%d bytes send OK!\n", totalsend);
   }
@@ -226,23 +228,22 @@ Host: %s:%d\r\nConnection: Close\r\n\r\n", host_file, host_addr, portnumber);
   /* 结束通讯 */
   close(sockfd);
 
-  MKDIR(argv[3],true);
-
   char strfilenametmp[301];
   memset(strfilenametmp,0,sizeof(strfilenametmp));
   snprintf(strfilenametmp,300,"%s.tmp",argv[3]);
 
+   // 把获取到的网页转换为中文
   char strcmd[1024];
   memset(strcmd,0,sizeof(strcmd));
   snprintf(strcmd,256,"iconv -c -f %s -t gb18030 %s -o %s",argv[5],local_file,strfilenametmp);
   system(strcmd);
   logfile.Write("%s\n",strcmd);
 
-  REMOVE(local_file);
+  // REMOVE(local_file); // 删除临时文件 
 
   RENAME(strfilenametmp,argv[3]);
 
-  exit(0);
+  return 0;
 }
 //////////////////////////////httpclient.c 结束///////////////////////////////////////////
 

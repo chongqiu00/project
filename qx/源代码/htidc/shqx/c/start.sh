@@ -15,3 +15,16 @@
 
 # 清理T_SURFDATA表中三天之前的数据
 /htidc/public/bin/deletetables "<logfilename>/log/shqx/deletetables_SURFDATA.log</logfilename><connstr>shqx/pwdidc@snorcl11g_198</connstr><tname>T_SURFDATA</tname><where>where ddatetime<sysdate-3</where><hourstr>00,02,04,08,10,12,14,16,18,20,22</hourstr>" &
+
+# 从中国天气网获取每小时的实况降雨图
+/htidc/shqx/bin/wgetrain24 /log/shqx/wgetrain24.log /data/wgettmp /data/wfile/zhrain24 &
+# 从中国天气网获取每小时的实况温度图
+/htidc/shqx/bin/wgettemp24 /log/shqx/wgettemp24.log /data/wgettmp /data/wfile/zhtemp24 &
+
+# 用于处理全国逐小时雨量实况图片文件。
+/htidc/shqx/bin/pzhrain24file /log/shqx/pzhrain24file.log shqx/pwdidc@snorcl11g_198 /data/wfile/zhrain24 /qxfile/zhrain24 T_ZHRAIN24 30 &
+# 清理T_ZHRAIN24表中两天之前的数据
+/htidc/public/bin/deletetables "<logfilename>/log/shqx/deletetables_ZHRAIN24.log</logfilename><connstr>shqx/pwdidc@snorcl11g_198</connstr><tname>T_ZHRAIN24</tname><where>where ddatetime<sysdate-2</where><hourstr>00,02,04,08,10,12,14,16,18,20,22</hourstr>" &
+
+# /data/wfile/zhrain24和/data/wfile/zhtemp24目录下两天前的文件要定期删除
+

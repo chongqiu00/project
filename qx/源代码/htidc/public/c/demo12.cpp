@@ -4,8 +4,65 @@
 
 #include "_public.h"
 
+#pragma pack(1)
+struct datarec /* ≥§∂»=100 byte */ 
+{ unsigned   char baoformat;         //  1 £®À≤ ±±®”–£©
+  unsigned   char station;           //  2 £®À≤ ±±®”–£©
+  unsigned   char stationname[6];    //  3 £®À≤ ±±®”–£©
+  unsigned   int  rec_time;          //  4 £®À≤ ±±®”–£©
+  unsigned   long rec_date;          //  5 £®À≤ ±±®”–£©
+  unsigned   int  wd2dd;             //  6 £®À≤ ±±®”–£©
+  unsigned   int  wd2df;             //  7£®À≤ ±±®”–£©
+  unsigned   int  wd10dd;            //  8£®À≤ ±±®”–£©
+  unsigned   int  wd10df;            //  9£®À≤ ±±®”–£©
+  unsigned   int  wd10maxdd;         // 10 
+  unsigned   int  wd10maxdf;         // 11
+  unsigned   int  wd3smaxdd;         // 12
+  unsigned   int  wd3smaxdf;         // 13 
+  unsigned   char wd10maxtime;       // 14
+  unsigned   char wd3smaxtime;       // 15
+	             int  temp;      //         16£®À≤ ±±®”–£©
+	             int  maxtemp;   //         17 
+  	          int  mintemp;      //      18
+  unsigned   char maxtemptime;       // 19
+  unsigned   char mintemptime;       // 20  
+  unsigned   int  hourrf;            // 21£®À≤ ±±®”–£©
+  unsigned   int  dayrf;             // 22£®À≤ ±±®”–£©
+	             char rh;        //         23 £®À≤ ±±®”–£©
+	             char maxrh;     //         24
+  unsigned   char maxrhtime;         // 25 
+ 	          char minrh;        //      26
+  unsigned   char minrhtime;         // 27 
+  unsigned   char rfmark1;           // 28
+ 	          int  dp;           //      29£®À≤ ±±®”–£©
+          int  ps;                // 30 //  ®À≤ ±±®”–£©
+	    	       int  maxps;   //           31
+  	       int  minps;           //   32 
+  unsigned   char maxpstime;         // 33
+  unsigned   char minpstime;         // 34
+  unsigned   char minrf[12];         // 35  
+ 	          int  Bps;          //      36
+  unsigned   char Ys;                // 37£®À≤ ±±®”–£©
+  unsigned   char w3a;               // 38£®À≤ ±±®”–£©
+  unsigned   int  wd3daymax;         // 39
+  unsigned   int  wf3daymax;         // 40
+  unsigned   int  wd3daymaxtime;     // 41 
+  unsigned   int  wd10daymax;        // 42 
+  unsigned   int  wf10daymax;        // 43
+  unsigned   int  wd10daymaxtime;    // 44 
+ 	          int  daymaxtemp;   //      45
+  unsigned   int  daymaxtemptime;    // 46
+             int  daymintemp;        // 47 
+  unsigned   int  daymintemptime;    // 48
+  unsigned   int  WpV;               //49£®À≤ ±±®”–£©
+  unsigned   char Tempspace[2];      //50£®À≤ ±±®”–£©
+}  Recv_Data;
+
+
 int main(int argc,char *argv[])
 {
+  printf("sizeof=%d=\n",sizeof(Recv_Data));
+ 
   if (argc != 2)
   {
     printf("\n");

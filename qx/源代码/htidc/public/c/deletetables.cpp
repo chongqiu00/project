@@ -17,7 +17,7 @@ void EXIT(int sig);
 void _help(char *argv[]);
 
 // 每批删除的记录数
-int  maxcounts=1;
+int  maxcounts=500;
 
 bool _deletetables();
 
@@ -160,6 +160,8 @@ bool _deletetables()
         logfile.Write("delete %s failed.\n%s\n",tname,delstmt.m_cda.message); return false;
       }
 
+      conn.commit();
+
       memset(strrowidn,0,sizeof(strrowidn));
 
       ccount=0;
@@ -168,8 +170,6 @@ bool _deletetables()
     if (fmod(selstmt.m_cda.rpc,10000) < 1)
     {
       logfile.Write("rows %d deleted.\n",selstmt.m_cda.rpc);
-
-      conn.commit();
 
       // 判断当前时间是否在启动时间之内
       memset(localhour,0,sizeof(localhour));

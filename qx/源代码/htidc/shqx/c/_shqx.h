@@ -82,12 +82,15 @@ public:
   int iccount;
   sqlstatement stmtsel,stmtins,stmtupt;
 
-  // 把记录拆分到m_stsignallog结构中。
+  // 把记录拆分到vsignallog容器中。
   bool SplitBuffer(const char *strBuffer);
 
-  // 把m_stsignallog结构中的值更新到T_SIGNALDATA表中。
+  // 把vsignallog容器中的值更新到T_SIGNALDATA表中。
   long InsertTable();
 };
+
+// 把非结构化数据文件写入oracle数据库的表中
+int FileToTable(connection *in_conn,CLogFile *in_logfile,char *in_tname,char *in_filename,char *in_ddatetime);
 
 
 #endif

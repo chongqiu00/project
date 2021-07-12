@@ -1,7 +1,6 @@
 /*
  *  本程序用于处理全国气象站点观测的分钟数据，并保存到数据库的T_SURFDATA表中。
  *  这是完善后的程序，未完善的程序在psurfdata_old.cpp中。
- *  作者：码农有道 日期：20190905
 */
 #include "_public.h"
 #include "_ooci.h"

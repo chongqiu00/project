@@ -1,7 +1,6 @@
 /*
  *  本程序用于生成全国气象站点观测的分钟数据。
  *  与crtsurfdata程序不同，本程序生成的数据文件支持txt和xml两种格式。
- *  作者：码农有道 日期：20190901
 */
 #include "_public.h"
 #include "_shqx.h"

@@ -30,35 +30,47 @@ CC=g++
 CFLAGS = -g -Wno-write-strings -Wno-unused-variable
 
 
-all: crtsurfdata crtsurfdata1 psurfdata_old psurfdata psurfdata1 psignallog
+all: crtsurfdata crtsurfdata1 psurfdata_old psurfdata psurfdata1 psignallog wgetrain24\
+     wgettemp24 pzhrain24file
+
 
 crtsurfdata:crtsurfdata.cpp _shqx.h _shqx.cpp
 	$(CC) $(CFLAGS) -o crtsurfdata crtsurfdata.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
-	cp crtsurfdata ../bin/.
+	cp -f crtsurfdata ../bin/.
 
 crtsurfdata1:crtsurfdata1.cpp _shqx.h _shqx.cpp
 	$(CC) $(CFLAGS) -o crtsurfdata1 crtsurfdata1.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
-	cp crtsurfdata1 ../bin/.
+	cp -f crtsurfdata1 ../bin/.
 
 psurfdata_old: psurfdata_old.cpp 
 	$(CC) $(CFLAGS) -o psurfdata_old psurfdata_old.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) -lm -lc
-	cp psurfdata_old ../bin/.
+	cp -f psurfdata_old ../bin/.
 
 psurfdata: psurfdata.cpp _shqx.h _shqx.cpp
 	$(CC) $(CFLAGS) -o psurfdata psurfdata.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
-	cp psurfdata ../bin/.
+	cp -f psurfdata ../bin/.
+
+pzhrain24file: pzhrain24file.cpp _shqx.h _shqx.cpp
+	$(CC) $(CFLAGS) -o pzhrain24file pzhrain24file.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
+	cp -f pzhrain24file ../bin/.
 
 psurfdata1: psurfdata1.cpp _shqx.h _shqx.cpp
 	$(CC) $(CFLAGS) -o psurfdata1 psurfdata1.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
-	cp psurfdata1 ../bin/.
+	cp -f psurfdata1 ../bin/.
 
 psignallog: psignallog.cpp _shqx.h _shqx.cpp
 	$(CC) $(CFLAGS) -o psignallog psignallog.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
-	cp psignallog ../bin/.
+	cp -f psignallog ../bin/.
 
-tt: tt.cpp _shqx.h _shqx.cpp
-	$(CC) $(CFLAGS) -o tt tt.cpp $(ORAINCL) $(ORALIB) $(ORALIBS) $(PUBINCL) $(PUBCPP) $(OCICPP) _shqx.cpp -lm -lc
+wgetrain24: wgetrain24.cpp 
+	$(CC) $(CFLAGS) -o wgetrain24 wgetrain24.cpp $(PUBINCL) $(PUBCPP) -lm -lc
+	cp -f wgetrain24 ../bin/.
+
+wgettemp24: wgetrain24.cpp 
+	$(CC) $(CFLAGS) -o wgettemp24 wgettemp24.cpp $(PUBINCL) $(PUBCPP) -lm -lc
+	cp -f wgettemp24 ../bin/.
 
 
 clean:
-	rm -rf crtsurfdata crtsurfdata1 psurfdata_old psurfdata psurfdata1 psignallog
+	rm -rf crtsurfdata crtsurfdata1 psurfdata_old psurfdata psurfdata1 psignallog wgetrain24
+	rm -rf wgettemp24 pzhrain24file

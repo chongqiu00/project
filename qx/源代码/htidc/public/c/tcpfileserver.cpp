@@ -1,5 +1,5 @@
 /*
- 这是一个通用的功能模块，采用TCP协议发送文件的客户端。
+ 这是一个通用的功能模块，采用TCP协议实现文件传输的服务端，多进程。
  作者：码农有道
 */
 
@@ -101,7 +101,7 @@ int main(int argc,char *argv[])
     // 子进程需要关掉监听的sock
     TcpServer.CloseListen();
 
-    // 等待登录
+    // 等待客户端的登录
     if (ClientLogin() == false) ChldEXIT(0);
 
     // 接收文件主函数

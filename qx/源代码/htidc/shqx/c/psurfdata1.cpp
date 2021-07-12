@@ -1,7 +1,6 @@
 /*
  *  本程序用于处理全国气象站点观测的分钟数据，并保存到数据库的T_SURFDATA表中。
  *  与psurfdata.cpp不同，本程序只支持xml格式。
- *  作者：码农有道 日期：20190905
 */
 #include "_public.h"
 #include "_ooci.h"
@@ -115,7 +114,7 @@ bool _psurfdata()
 
     if (File.FFGETS(strBuffer,300,"<endl/>")==false) break;
 
-logfile.Write("str=%s=\n",strBuffer);
+    // logfile.Write("str=%s=\n",strBuffer);
 
     // logfile.Write("%s\n",strBuffer);
     

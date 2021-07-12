@@ -1,6 +1,5 @@
 /*
  *  本程序用于处理分区预警信号发布日志，并保存到数据库的T_SIGNALLOG表中。
- *  作者：码农有道 日期：20190905
 */
 #include "_public.h"
 #include "_ooci.h"
@@ -117,13 +116,13 @@ bool _psignallog()
     // 每行预警信号发布的记录的最后都是用"000="结束的。
     if (strstr(strBuffer,"000=")==0) continue;
 
-    UpdateStr(strBuffer,"  "," ",true);
+    UpdateStr(strBuffer,"  "," ",true);  // 把内容中的两个空格替换成一个空格
     // logfile.Write("%s\n",strBuffer);
     
     // 把用逗号分隔的记录拆分到结构体中
     if (SIGNALLOG.SplitBuffer(strBuffer)==false) { logfile.Write("%s\n",strBuffer); continue; }
 
-    // 把结构体中的数据更新到T_SIGNALLOG表中
+    // 把vsignallog容器中的值更新到T_SIGNALDATA表中。
     long rc=SIGNALLOG.InsertTable();
 
     // 只要不是数据库session的错误，程序就继续。

@@ -242,13 +242,13 @@ bool CompVector()
       if ( (strcmp(vlistfile[ii].filename,vokfilename[jj].filename)==0) &&
            (strcmp(vlistfile[ii].mtime,vokfilename[jj].mtime)==0) )
       {
-        vokfilename1.push_back(vlistfile[ii]); break;//´æÔÚ
+        vokfilename1.push_back(vlistfile[ii]); break;
       }
     }
 
     if (jj==vokfilename.size())
     {
-      vlistfile1.push_back(vlistfile[ii]);//²»´æÔÚ
+      vlistfile1.push_back(vlistfile[ii]);
     }
   }
 
